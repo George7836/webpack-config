@@ -1,0 +1,8 @@
+button {
+  background-color: blue;
+
+  & span {
+    font-size: 20px;
+    color: red;
+  }
+}
