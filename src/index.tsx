@@ -1,11 +1,11 @@
 import { createRoot } from "react-dom/client";
-import { App } from "./components/App";
+import { App } from "@/components/App";
 import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import { About } from "./pages/about";
-import { Shop } from "./pages/shop";
+import { About } from "@/pages/about";
+import { Shop } from "@/pages/shop";
 import { Suspense } from "react";
 
 const root = document.getElementById("root");
