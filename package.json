@@ -16,6 +16,7 @@
     "@types/react": "^18.2.25",
     "@types/react-dom": "^18.2.11",
     "@types/webpack": "^5.28.3",
+    "@types/webpack-bundle-analyzer": "^4.7.0",
     "@types/webpack-dev-server": "^4.7.2",
     "css-loader": "^6.8.1",
     "html-webpack-plugin": "^5.5.3",
@@ -28,6 +29,7 @@
     "typescript": "^5.2.2",
     "typescript-plugin-css-modules": "^5.1.0",
     "webpack": "^5.88.2",
+    "webpack-bundle-analyzer": "^4.10.2",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^4.15.1"
   },
