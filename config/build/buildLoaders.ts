@@ -23,6 +23,20 @@ export function buildLoaders(options: BuildOptions): ModuleOptions['rules'] {
       ],
     },
     {
+      test: /\.(png|jpg|jpeg|gif)$/i,
+      type: 'asset/resource',
+    },
+    {
+      test: /\.svg$/i,
+      type: 'asset',
+      resourceQuery: /url/,
+    },
+    {
+      test: /\.svg$/i,
+      resourceQuery: { not: [/url/] },
+      use: [{ loader: '@svgr/webpack', options: { icon: true } }],
+    },
+    {
       test: /\.tsx?$/,
       use: "ts-loader",
       exclude: /node_modules/,
