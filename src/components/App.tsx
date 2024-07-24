@@ -7,7 +7,7 @@ import SVG2 from '@/assets/youtube-168.svg?url'
 export const App = () => {
   return (
     <div>
-      <button className={classes.button}>
+      <button className={classes.button} onClick={() => { throw new Error('Ошибка') }}>
         <span>Клик</span>
       </button>
       <img src={PNG} width='40px' height='40px'/>
