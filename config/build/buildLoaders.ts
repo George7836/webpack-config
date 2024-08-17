@@ -1,7 +1,6 @@
-import { ModuleOptions } from "webpack";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
+import { ModuleOptions } from "webpack";
 import { BuildOptions } from "./types/types";
-import ReactRefreshTypeScript  from "react-refresh-typescript"
 
 export function buildLoaders(options: BuildOptions): ModuleOptions['rules'] {
   const isProd = options.mode === "production";
@@ -36,21 +35,16 @@ export function buildLoaders(options: BuildOptions): ModuleOptions['rules'] {
       test: /\.svg$/i,
       resourceQuery: { not: [/url/] },
       use: [{ loader: '@svgr/webpack', options: { icon: true } }],
-    },
+    }, 
     {
-      test: /\.tsx?$/,
-      use: [
-        {
-          loader: 'ts-loader',
-          options: {
-            transpileOnly: true,
-            getCustomTransformers: () => ({
-              before: [isDev && ReactRefreshTypeScript()].filter(Boolean),
-            }),
-          }
-        }
-      ],
+      test: /\.(ts|tsx)?$/,
+      loader: 'esbuild-loader',
+      options: {
+        loader: 'tsx',
+        target: 'es2015',
+        sourcemap: isProd ? false : 'inline',
+      },
       exclude: /node_modules/,
-    },
+    }
   ]
 }

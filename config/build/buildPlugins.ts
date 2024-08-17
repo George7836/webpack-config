@@ -6,6 +6,7 @@ import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
 import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 import ReactRefreshWebpackPlugin  from '@pmmmwh/react-refresh-webpack-plugin'
 import path from "path";
+import { EsbuildPlugin } from 'esbuild-loader'
 
 export function buildPlugins(options: BuildOptions): Configuration['plugins'] {
   const isDev = options.mode === "development";
@@ -16,7 +17,12 @@ export function buildPlugins(options: BuildOptions): Configuration['plugins'] {
       template: options.paths.html,
       favicon: path.resolve(options.paths.public, 'favicon.ico')
     }),
-    new ForkTsCheckerWebpackPlugin()
+    new ForkTsCheckerWebpackPlugin({
+      typescript: {
+        configFile: path.resolve(__dirname, '../../tsconfig.json'),
+      },
+    }),
+    new EsbuildPlugin(),
   ]
 
   if(isDev) {
