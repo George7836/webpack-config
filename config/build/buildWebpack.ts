@@ -27,9 +27,22 @@ export function buildWebpack(options: BuildOptions): webpack.Configuration {
     optimization: {
       minimizer: [
         new EsbuildPlugin({
-          target: 'es2015' 
+          target: 'es2015'
         })
-      ]
+      ],
+      splitChunks: {
+        chunks: "all",
+        cacheGroups: {
+          vendors: {
+            test: /[\\/]node_modules[\\/]/,
+            name(module: any) {
+              const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/) ?? 'package';
+              return `npm.${packageName[1].replace('@', '')}`;
+            },
+          }
+        }
+      },
+      moduleIds: 'deterministic',
     }
   };
 }
