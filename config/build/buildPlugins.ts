@@ -7,6 +7,7 @@ import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 import ReactRefreshWebpackPlugin  from '@pmmmwh/react-refresh-webpack-plugin'
 import path from "path";
 import { EsbuildPlugin } from 'esbuild-loader'
+import DotenvWebpackPlugin from 'dotenv-webpack'
 
 export function buildPlugins(options: BuildOptions): Configuration['plugins'] {
   const isDev = options.mode === "development";
@@ -23,6 +24,7 @@ export function buildPlugins(options: BuildOptions): Configuration['plugins'] {
       },
     }),
     new EsbuildPlugin(),
+    new DotenvWebpackPlugin()
   ]
 
   if(isDev) {
