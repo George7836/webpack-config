@@ -18,11 +18,6 @@ export function buildPlugins(options: BuildOptions): Configuration['plugins'] {
       template: options.paths.html,
       favicon: path.resolve(options.paths.public, 'favicon.ico')
     }),
-    new ForkTsCheckerWebpackPlugin({
-      typescript: {
-        configFile: path.resolve(__dirname, '../../tsconfig.json'),
-      },
-    }),
     new EsbuildPlugin(),
     new DotenvWebpackPlugin()
   ]
@@ -36,6 +31,11 @@ export function buildPlugins(options: BuildOptions): Configuration['plugins'] {
     plugins.push(new MiniCssExtractPlugin({
       filename: "css/[name].[contenthash:8].css",
       chunkFilename: "css/[name].[contenthash:8].css",
+    }))
+    plugins.push(new ForkTsCheckerWebpackPlugin({
+      typescript: {
+        configFile: path.resolve(__dirname, '../../tsconfig.json'),
+      }
     }))
   }
 
