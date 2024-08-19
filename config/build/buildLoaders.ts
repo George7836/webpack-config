@@ -23,7 +23,7 @@ export function buildLoaders(options: BuildOptions): ModuleOptions['rules'] {
       ],
     },
     {
-      test: /\.(png|jpg|jpeg|gif)$/i,
+      test: /\.(png|jpg|jpeg|gif|webp|woff|woff2)$/i,
       type: 'asset/resource',
     },
     {
