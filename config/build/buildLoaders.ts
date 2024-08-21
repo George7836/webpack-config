@@ -2,9 +2,9 @@ import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import { ModuleOptions } from "webpack";
 import { BuildOptions } from "./types/types";
 
-export function buildLoaders(options: BuildOptions): ModuleOptions['rules'] {
+export function buildLoaders(options: BuildOptions): ModuleOptions["rules"] {
   const isProd = options.mode === "production";
-  const isDev = options.mode === 'development';
+  const isDev = options.mode === "development";
 
   return [
     {
@@ -15,7 +15,9 @@ export function buildLoaders(options: BuildOptions): ModuleOptions['rules'] {
           loader: "css-loader",
           options: {
             modules: {
-              localIdentName:  isDev ? '[path][name]__[local]' : '[hash:base64:8]'
+              localIdentName: isDev
+                ? "[path][name]__[local]"
+                : "[hash:base64:8]",
             },
           },
         },
@@ -24,27 +26,27 @@ export function buildLoaders(options: BuildOptions): ModuleOptions['rules'] {
     },
     {
       test: /\.(png|jpg|jpeg|gif|webp|woff|woff2)$/i,
-      type: 'asset/resource',
+      type: "asset/resource",
     },
     {
       test: /\.svg$/i,
-      type: 'asset',
+      type: "asset",
       resourceQuery: /url/,
     },
     {
       test: /\.svg$/i,
       resourceQuery: { not: [/url/] },
-      use: [{ loader: '@svgr/webpack', options: { icon: true } }],
-    }, 
+      use: [{ loader: "@svgr/webpack", options: { icon: true } }],
+    },
     {
       test: /\.(ts|tsx)?$/,
-      loader: 'esbuild-loader',
+      loader: "esbuild-loader",
       options: {
-        loader: 'tsx',
-        target: 'es2015',
-        sourcemap: isProd ? false : 'inline',
+        loader: "tsx",
+        target: "es2015",
+        sourcemap: isProd ? false : "inline",
       },
       exclude: /node_modules/,
-    }
-  ]
+    },
+  ];
 }

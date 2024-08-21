@@ -1,7 +1,7 @@
 import type { Configuration as DevServerConfiguration } from "webpack-dev-server";
 import { BuildOptions } from "./types/types";
 
-const BACKEND_URL = process.env.BACKEND_URL ?? 'https://api.github.com'
+const BACKEND_URL = process.env.BACKEND_URL ?? "https://api.github.com";
 
 export function buildDevServer(options: BuildOptions): DevServerConfiguration {
   return {
@@ -10,12 +10,12 @@ export function buildDevServer(options: BuildOptions): DevServerConfiguration {
     historyApiFallback: true,
     hot: true,
     proxy: {
-      '/api': {
+      "/api": {
         target: BACKEND_URL,
         secure: false,
         changeOrigin: true,
-        pathRewrite: {'^/api': ''}, 
-      }
-    }
-  }
+        pathRewrite: { "^/api": "" },
+      },
+    },
+  };
 }

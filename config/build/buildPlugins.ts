@@ -1,47 +1,53 @@
-import HtmlWebpackPlugin from "html-webpack-plugin";
-import MiniCssExtractPlugin from "mini-css-extract-plugin";
-import webpack, { Configuration } from "webpack";
-import { BuildOptions } from "./types/types";
-import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
-import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
-import ReactRefreshWebpackPlugin  from '@pmmmwh/react-refresh-webpack-plugin'
-import path from "path";
-import { EsbuildPlugin } from 'esbuild-loader'
-import DotenvWebpackPlugin from 'dotenv-webpack'
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import webpack, { Configuration } from 'webpack';
+import { BuildOptions } from './types/types';
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
+import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
+import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
+import path from 'path';
+import { EsbuildPlugin } from 'esbuild-loader';
+import DotenvWebpackPlugin from 'dotenv-webpack';
+import ESLintWebpackPlugin from 'eslint-webpack-plugin';
 
 export function buildPlugins(options: BuildOptions): Configuration['plugins'] {
-  const isDev = options.mode === "development";
-  const isProd = options.mode === "production";
+  const isDev = options.mode === 'development';
+  const isProd = options.mode === 'production';
 
   const plugins: Configuration['plugins'] = [
     new HtmlWebpackPlugin({
       template: options.paths.html,
-      favicon: path.resolve(options.paths.public, 'favicon.ico')
+      favicon: path.resolve(options.paths.public, 'favicon.ico'),
     }),
     new EsbuildPlugin(),
-    new DotenvWebpackPlugin()
-  ]
+    new DotenvWebpackPlugin(),
+  ];
 
-  if(isDev) {
-    plugins.push(new webpack.ProgressPlugin())
-    plugins.push(new ReactRefreshWebpackPlugin())
+  if (isDev) {
+    plugins.push(new webpack.ProgressPlugin(), new ReactRefreshWebpackPlugin());
   }
 
-  if(isProd) {
-    plugins.push(new MiniCssExtractPlugin({
-      filename: "css/[name].[contenthash:8].css",
-      chunkFilename: "css/[name].[contenthash:8].css",
-    }))
-    plugins.push(new ForkTsCheckerWebpackPlugin({
-      typescript: {
-        configFile: path.resolve(__dirname, '../../tsconfig.json'),
-      }
-    }))
+  if (isProd) {
+    plugins.push(
+      new MiniCssExtractPlugin({
+        filename: 'css/[name].[contenthash:8].css',
+        chunkFilename: 'css/[name].[contenthash:8].css',
+      }),
+      new ForkTsCheckerWebpackPlugin({
+        typescript: {
+          configFile: path.resolve(__dirname, '../../tsconfig.json'),
+        },
+      }),
+      new ESLintWebpackPlugin({
+        extensions: ['ts', 'tsx', 'js', 'jsx'],
+        exclude: ['/node_modules/', '/.idea/', '/.vscode/'],
+      }),
+    );
   }
 
-  if(options.analyzer) {
-    plugins.push(new BundleAnalyzerPlugin())
+  if (options.analyzer) {
+    plugins.push(new BundleAnalyzerPlugin());
   }
 
-  return plugins
+  return plugins;
 }
