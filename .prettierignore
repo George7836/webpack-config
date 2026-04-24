@@ -1,0 +1,7 @@
+# Build artifacts
+/node_modules
+/build
+/out
+
+# CI code
+/jenkins
